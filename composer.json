@@ -1,7 +1,29 @@
 {
+    "name" : "depa/middleware-navigation",
+    "description" : "The middleware navigation is a PSR-15 middleware that provides navigation functionality to a Zend Expressive application",
+    "keywords" : [
+        "framework",
+        "depa",
+        "Navigation"
+    ],
+    "license" : "MIT",
+    "homepage" : "https://github.com/depa-berlin/Middleware-Navigation",
     "require": {
         "psr/http-server-middleware": "^1.0",
         "psr/container": "^1.0",
         "zendframework/zend-servicemanager": "^3.4"
-    }
+    },
+    "autoload" : {
+        "psr-4" : {
+            "Depa\\NavigationMiddleware\\" : "src/"
+        }
+    },
+    "extra": {
+        "zf": {
+            "component": "Depa\\NavigationMiddleware",
+            "config-provider": "Depa\\NavigationMiddleware\\ConfigProvider"
+        }
+    },
+    "minimum-stability" : "dev",
+    "prefer-stable" : true
 }
