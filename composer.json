@@ -15,13 +15,13 @@
     },
     "autoload" : {
         "psr-4" : {
-            "Depa\\NavigationMiddleware\\" : "src/"
+            "depa\\NavigationMiddleware\\" : "src/"
         }
     },
     "extra": {
         "zf": {
-            "component": "Depa\\NavigationMiddleware",
-            "config-provider": "Depa\\NavigationMiddleware\\ConfigProvider"
+            "component": "depa\\NavigationMiddleware",
+            "config-provider": "depa\\NavigationMiddleware\\ConfigProvider"
         }
     },
     "minimum-stability" : "dev",
