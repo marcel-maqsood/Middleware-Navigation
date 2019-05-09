@@ -26,17 +26,17 @@ class ConfigProvider
      *
      * @return array
      */
-    public function getDependencyConfig(): array
+    public function getDependencyConfig()
     {
         return [
             'abstract_factories' => [
                 Navigation\NavigationAbstractServiceFactory::class,
             ],
-            'aliases' => [
-                'navigation' => Navigation::class,
-            ],
             'factories' => [
-                Middleware\NavigationMiddleware::class => Middleware\NavigationMiddlewareFactory::class,
+                Navigation\NavigationInterface::class => Navigation\NavigationServiceFactory::class,
+            ],
+            'aliases' => [
+                Navigation\Navigation::class => Navigation\NavigationInterface::class,
             ],
         ];
     }
