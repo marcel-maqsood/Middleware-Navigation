@@ -1,6 +1,5 @@
 <?php
 
-
 namespace depa\NavigationMiddleware\Navigation;
 
 use Interop\Container\ContainerInterface;
@@ -22,8 +21,9 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
     /**
      * Can we create a navigation by the requested name?
      *
-     * @param  ContainerInterface $container
-     * @param  string $requestedName
+     * @param ContainerInterface $container
+     * @param string             $requestedName
+     *
      * @return bool
      */
     public function canCreate(ContainerInterface $container, $requestedName)
@@ -33,19 +33,19 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
             return false;
         }
 
-        return (
+        return
             isset($config[$requestedName])
             && is_array($config[$requestedName])
-            && ! empty($config[$requestedName])
-        );
+            && !empty($config[$requestedName]);
     }
 
     /**
-     * Determine if we can create a service with name (SM v2 compatibility)
+     * Determine if we can create a service with name (SM v2 compatibility).
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @param string $name
-     * @param string $requestedName
+     * @param string                  $name
+     * @param string                  $requestedName
+     *
      * @return bool
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -54,25 +54,28 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
     }
 
     /**
-     * Create a DB adapter
+     * Create a DB adapter.
      *
-     * @param  ContainerInterface $container
-     * @param  string $requestedName
-     * @param  array $options
+     * @param ContainerInterface $container
+     * @param string             $requestedName
+     * @param array              $options
+     *
      * @return Navigation
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $this->getConfig($container);
+
         return new Navigation($config[$requestedName]);
     }
 
     /**
-     * Create service with name
+     * Create service with name.
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @param string $name
-     * @param string $requestedName
+     * @param string                  $name
+     * @param string                  $requestedName
+     *
      * @return Navigation
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -81,9 +84,10 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
     }
 
     /**
-     * Get db configuration, if any
+     * Get db configuration, if any.
      *
-     * @param  ContainerInterface $container
+     * @param ContainerInterface $container
+     *
      * @return array
      */
     protected function getConfig(ContainerInterface $container)
@@ -92,28 +96,32 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
             return $this->config;
         }
 
-        if (! $container->has('config')) {
+        if (!$container->has('config')) {
             $this->config = [];
+
             return $this->config;
         }
 
         $config = $container->get('config');
-        if (! isset($config['depaNavigation'])
-            || ! is_array($config['depaNavigation'])
+        if (!isset($config['depaNavigation'])
+            || !is_array($config['depaNavigation'])
         ) {
             $this->config = [];
+
             return $this->config;
         }
 
         $config = $config['depaNavigation'];
-        if (! isset($config['navigations'])
-            || ! is_array($config['navigations'])
+        if (!isset($config['navigations'])
+            || !is_array($config['navigations'])
         ) {
             $this->config = [];
+
             return $this->config;
         }
 
         $this->config = $config['navigations'];
+
         return $this->config;
     }
 }

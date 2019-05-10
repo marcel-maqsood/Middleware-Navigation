@@ -1,11 +1,6 @@
 <?php
 
-/**
-
- */
-
 namespace depa\NavigationMiddleware;
-
 
 class ConfigProvider
 {
