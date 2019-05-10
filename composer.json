@@ -11,7 +11,8 @@
     "require": {
         "psr/http-server-middleware": "^1.0",
         "psr/container": "^1.0",
-        "zendframework/zend-servicemanager": "^3.4"
+        "zendframework/zend-servicemanager": "^3.4",
+        "knplabs/knp-menu": "^2.3"
     },
     "autoload" : {
         "psr-4" : {
