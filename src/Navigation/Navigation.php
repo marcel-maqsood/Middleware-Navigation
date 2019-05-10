@@ -29,7 +29,6 @@ class Navigation
         }
 
         $renderer = new ListRenderer(new \Knp\Menu\Matcher\Matcher());
-        echo $renderer->render($menu);
-        exit;
+        return $renderer->render($menu);
     }
 }
