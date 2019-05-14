@@ -6,56 +6,47 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use RecursiveIteratorIterator;
+use Zend\Expressive\Navigation\Page\ExpressivePage;
+use Zend\Expressive\Router\RouteResult;
+use Zend\Navigation\AbstractContainer;
+use Zend\Navigation\Exception;
 
 /**
  * Pipeline middleware for injecting Navigations with a RouteResult.
  */
 class NavigationMiddleware implements MiddlewareInterface
 {
-    /**
-     * @var AbstractContainer[]
-     */
-    private $containers = [];
+    private $navigationObjects;
 
     /**
-     * @param AbstractContainer[] $containers
+     * @param NavigationObjects[] $navigationObjects
      */
-    public function __construct(array $containers)
+    public function __construct(array $navigationObjects)
     {
-        foreach ($containers as $container) {
-            if (!$container instanceof AbstractContainer) {
-                throw new Exception\InvalidArgumentException(sprintf(
-                    'Invalid argument: container must be an instance of %s',
-                    AbstractContainer::class
-                ));
-            }
-            $this->containers[] = $container;
-        }
+        $this->navigationObjects = $navigationObjects;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
+
+
         $routeResult = $request->getAttribute(RouteResult::class, false);
+
         if (!$routeResult instanceof RouteResult) {
             return $handler->handle($request);
         }
-        foreach ($this->containers as $container) {
-            $iterator = new RecursiveIteratorIterator(
-                $container,
-                RecursiveIteratorIterator::SELF_FIRST
-            );
-            foreach ($iterator as $page) {
-                if ($page instanceof ExpressivePage) {
-                    $page->setRouteResult($routeResult);
-                }
-            }
-        }
 
+        foreach ($this->navigationObjects as $naviObj) {
+            $naviObj->setRoute($routeResult->getMatchedRouteName());
+            $naviObj->setParams($routeResult->getMatchedParams());
+        }
         return $handler->handle($request);
     }
 }
