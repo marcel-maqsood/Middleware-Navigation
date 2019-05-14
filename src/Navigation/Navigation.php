@@ -9,9 +9,49 @@ class Navigation
 {
     private $data;
 
+    private $activeRoute;
+
+    private $routeParams;
+
     public function __construct($navigationData)
     {
         $this->data = $navigationData;
+    }
+
+    /**
+     * Setzt die aktive Route.
+     *
+     * @param string $activeRoute
+     */
+    public function setRoute(string $activeRoute){
+        $this->activeRoute = $activeRoute;
+    }
+
+    /**
+     * Setzt die übergebenen Parameter.
+     *
+     * @param array $routeParams
+     */
+    public function setParams(array $routeParams){
+        $this->routeParams = $routeParams;
+    }
+
+    /**
+     * Gibt die momentane Route wieder.
+     *
+     * @return mixed
+     */
+    public function getRoute() : string{
+        return $this->activeRoute;
+    }
+
+    /**
+     * Gibt die momentan vorhanden Parameter zurück
+     *
+     * @return array
+     */
+    public function getParams() : array{
+        return $this->routeParams;
     }
 
     public function render(){

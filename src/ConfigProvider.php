@@ -2,12 +2,6 @@
 
 namespace depa\NavigationMiddleware;
 
-use depa\NavigationMiddleware\Middleware\NavigationMiddleware;
-use depa\NavigationMiddleware\Middleware\NavigationMiddlewareFactory;
-use depa\NavigationMiddleware\Navigation\Navigation;
-use depa\NavigationMiddleware\Navigation\NavigationAbstractServiceFactory;
-use depa\NavigationMiddleware\Navigation\NavigationServiceFactory;
-
 class ConfigProvider
 {
     /**
