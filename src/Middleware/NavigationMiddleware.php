@@ -6,8 +6,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use RecursiveIteratorIterator;
-use Zend\Expressive\Navigation\Page\ExpressivePage;
 use Zend\Expressive\Router\RouteResult;
 use Zend\Navigation\AbstractContainer;
 use Zend\Navigation\Exception;
