@@ -22,7 +22,7 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * Can we create a navigation by the requested name?
      *
      * @param ContainerInterface $container
-     * @param string             $requestedName
+     * @param string $requestedName
      *
      * @return bool
      */
@@ -43,8 +43,8 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * Determine if we can create a service with name (SM v2 compatibility).
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @param string                  $name
-     * @param string                  $requestedName
+     * @param string $name
+     * @param string $requestedName
      *
      * @return bool
      */
@@ -57,15 +57,14 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * Create a DB adapter.
      *
      * @param ContainerInterface $container
-     * @param string             $requestedName
-     * @param array              $options
+     * @param string $requestedName
+     * @param array $options
      *
      * @return Navigation
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $this->getConfig($container);
-
         return new Navigation($config[$requestedName]['data']);
     }
 
@@ -73,8 +72,8 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * Create service with name.
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @param string                  $name
-     * @param string                  $requestedName
+     * @param string $name
+     * @param string $requestedName
      *
      * @return Navigation
      */
@@ -115,7 +114,8 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
         if (!isset($config['navigations'])
             || !is_array($config['navigations'])
         ) {
-            $this->config = [];
+
+            $this->config = $config;
 
             return $this->config;
         }
