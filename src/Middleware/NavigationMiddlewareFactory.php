@@ -2,29 +2,49 @@
 
 namespace depa\NavigationMiddleware\Middleware;
 
+
 use Psr\Container\ContainerInterface;
+use Zend\Expressive\Authorization\AuthorizationInterface;
+use Zend\Expressive\Authorization\Rbac\ZendRbac;
+use Zend\Expressive\Template\TemplateRendererInterface;
+
 
 class NavigationMiddlewareFactory
 {
-    public function __invoke(ContainerInterface $container, $requestedName) : NavigationMiddleware
+    public function __invoke(ContainerInterface $container, $requestedName): NavigationMiddleware
     {
 
-        if(!isset($container->get('config')['depaNavigation']) && !is_array($container->get('config')['depaNavigation'])){
-            throw new \Exception('Error! der Configeintrag für depaNavigation ist kein array oder nicht gesetzt.');
+        if (!isset($container->get('config')['depaNavigation'])) {
+            throw new \Exception('Die Config beinhaltet keinen Navigations-Eintrag (depaNavigation)!');
         }
 
-        if(!isset($container->get('config')['depaNavigation']['navigations']) && !is_array($container->get('config')['depaNavigation']['navigations'])){
-            throw new \Exception('Error! die Navigations Einträge sind entweder keine arrays oder nicht gesetzt.');
+        if (!is_array($container->get('config')['depaNavigation'])) {
+            throw new \Exception('Die Definition einer Navigation muss ein Array sein (depaNavigation)!');
+        }
+
+        if (!isset($container->get('config')['depaNavigation']['navigations'])) {
+            if (!isset($container->get('config')['depaNavigation'])) {
+                throw new \Exception('Die Config beinhaltet keine Navigation (depaNavigation)!');
+            }
+
+            $navigationConfigArray = $container->get('config')['depaNavigation'];
+            return $this->createNavigationObjects($navigationConfigArray, $container);
         }
 
         $navigationConfigArray = $container->get('config')['depaNavigation']['navigations'];
+        return $this->createNavigationObjects($navigationConfigArray, $container);
+    }
 
-        foreach ($navigationConfigArray as $navigationName => $naviParams)
-        {
-            if($container->get($navigationName) instanceof \depa\NavigationMiddleware\Navigation\Navigation){
-                $navigationObjects[] = $container->get($navigationName);
+    private function createNavigationObjects($navigationConfigArray, $container)
+    {
+        $navigationObjects = [];
+        foreach ($navigationConfigArray as $navigationName => $naviParams) {
+            if ($container->get($navigationName) instanceof \depa\NavigationMiddleware\Navigation\Navigation) {
+                $navigationObjects[$navigationName] = $container->get($navigationName);
             }
         }
-        return new NavigationMiddleware($navigationObjects);
+
+        return new NavigationMiddleware($navigationObjects, $container->get(TemplateRendererInterface::class));
     }
 }
+

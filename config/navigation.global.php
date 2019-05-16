@@ -2,47 +2,78 @@
 
 return [
     'depaNavigation' => [
-        'navigations' => [
-            'Application\depaNavigation\AppNavigation' => [
-                'test' => [
-                    'uri'        => 'https://test1.de',
+        /*'Application\depaNavigation\DefaultNavigation' => [
+            'data' => [
+                'irgendwas' => [
+                    'uri' => 'https://designpark.de',
                     'attributes' => [
-                        'id'     => 'l',
-                        'class ' => 'Test_class',
+                        'id' => 'l',
+                        'class ' => 'Test_class'
                     ],
+                    'route' => 'adminNavi',
                     'childs' => [
                         'subpath' => [
-                            'uri' => 'https://test2.de',
-                        ],
-                    ],
-                ],
-                'test2' => [
-                    'uri' => 'https://test2.de',
-                ],
+                            'uri' => '/appnavi',
+                            'attributes' => [
+                                'id' => 'l',
+                                'class ' => 'Test2_class'
+                            ],
+                            'route' => 'appNavi',
+                        ]
+                    ]
+                ]
             ],
-
-            'Application\depaNavigation\AdminNavigation' => [
-                'admin1' => [
-                    'uri'        => 'https://test1.de',
-                    'attributes' => [
-                        'id'     => 'l',
-                        'class ' => 'Test_class',
-                    ],
-                    'childs' => [
-                        'subadmin' => [
-                            'uri'    => 'https://test2.de',
-                            'childs' => [
-                                'subadmin' => [
-                                    'uri' => 'https://test2.de',
+            'permission_manager' => 'rbac'
+        ],*/
+        'navigations' => [
+            'Application\depaNavigation\AppNavigation' => [
+                'data' => [
+                    'admNavi' => [
+                        'uri' => '/adminnavi',
+                        'attributes' => [
+                            'id' => 'l',
+                            'class ' => 'Test_class'
+                        ],
+                        'route' => 'adminNavi',
+                        'childs' => [
+                            'subpath' => [
+                                'uri' => '/appnavi',
+                                'attributes' => [
+                                    'id' => 'l',
+                                    'class ' => 'Test2_class'
                                 ],
+                                'route' => 'appNavi',
                             ],
                         ],
                     ],
                 ],
-                'admin2' => [
-                    'uri' => 'https://test2.de',
+                'permission_manager' => 'rbac'
+            ],
+
+            'Application\depaNavigation\AdminNavigation' => [
+                'data' => [
+                    'admin1' => [
+                        'uri' => '/appnavi',
+                        'attributes' => [
+                            'id' => 'l',
+                            'class ' => 'Test_class'
+                        ],
+                        'route' => 'appnavi',
+                        'childs' => [
+                            'subadmin' => [
+                                'uri' => '/adminnavi',
+                                'route' => 'adminNavi'
+                            ],
+                        ],
+                    ],
+                    'admin2' => [
+                        'uri' => '/adminnavi',
+                        'route' => 'adminNavi'
+                    ],
                 ],
+                'permission_manager' => 'rbac'
             ],
         ],
     ],
 ];
+

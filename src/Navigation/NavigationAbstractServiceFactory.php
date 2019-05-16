@@ -66,7 +66,7 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
     {
         $config = $this->getConfig($container);
 
-        return new Navigation($config[$requestedName]);
+        return new Navigation($config[$requestedName]['data']);
     }
 
     /**
