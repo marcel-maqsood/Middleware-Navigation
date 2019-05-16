@@ -6,6 +6,7 @@ namespace depa\NavigationMiddleware\Middleware;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Authorization\AuthorizationInterface;
 use Zend\Expressive\Authorization\Rbac\ZendRbac;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 
@@ -43,8 +44,9 @@ class NavigationMiddlewareFactory
                 $navigationObjects[$navigationName] = $container->get($navigationName);
             }
         }
+        $router = $container->get(RouterInterface::class);
 
-        return new NavigationMiddleware($navigationObjects, $container->get(TemplateRendererInterface::class));
+        return new NavigationMiddleware($navigationObjects, $container->get(TemplateRendererInterface::class),$router);
     }
 }
 

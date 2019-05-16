@@ -18,13 +18,16 @@ class NavigationMiddleware implements MiddlewareInterface
     private $navigationObjects;
 
     private $renderer;
+
+    private $router;
     /**
      * @param NavigationObjects[] $navigationObjects
      */
-    public function __construct(array $navigationObjects, $renderer)
+    public function __construct(array $navigationObjects, $renderer, $router)
     {
         $this->navigationObjects = $navigationObjects;
         $this->renderer = $renderer;
+        $this->router = $router;
     }
 
     /**
@@ -36,8 +39,8 @@ class NavigationMiddleware implements MiddlewareInterface
     ): ResponseInterface
     {
 
-        $routeResult = $request->getAttribute(RouteResult::class, false);
-
+        //$routeResult = $request->getAttribute(RouteResult::class, false);
+        $routeResult = $this->router->match($request);
         if (!$routeResult instanceof RouteResult) {
             return $handler->handle($request);
         }
