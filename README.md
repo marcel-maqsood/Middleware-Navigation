@@ -15,6 +15,21 @@ $ composer require depa/middleware-navigation
 
 ...
 
+
+```php
+ '{navigationpoint}' => [
+                    'uri' => '{path}',//evtl. überflüssig
+                    'attributes' => [
+                        'id' => '{id from html-element}',
+                        'class ' => '{css-class}'
+                    ],
+                    'route' => '{route}', //Bezeichner der Route
+                    ];
+```
+
+
+
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
