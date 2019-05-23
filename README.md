@@ -28,8 +28,12 @@ $ composer require depa/middleware-navigation
 ```
 
 
+## Credits
+
+This bundle is inspired by [Zend Framework](https://framework.zend.com). It has been developed by [designpark](https://www.designpark.de).
 
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
