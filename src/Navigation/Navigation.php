@@ -54,25 +54,45 @@ class Navigation
         return $this->routeParams;
     }
 
-    public function render(){
+    public function render(array $navi = null)
+    {
         $factory = new MenuFactory();
         $menu = $factory->createItem('My menu');
-        foreach($this->data as $key => $attributes){
+        foreach ($this->data as $key => $attributes) {
             $menu->addChild($key, $attributes);
-            if(isset($attributes['route']) && $this->activeRoute === $attributes['route']){
+            if (isset($attributes['route']) && $this->activeRoute === $attributes['route']) {
                 $menu->addChild($key, $attributes)->setCurrent(true);
             }
-            if(isset($attributes['childs'])){
-                foreach ($attributes['childs'] as $childKey => $child){
+            if (isset($attributes['childs'])) {
+                foreach ($attributes['childs'] as $childKey => $child) {
                     $menu[$key]->addChild($childKey, $child);
-                    if(isset($attributes['route']) && $this->activeRoute === $child['route']){
-                        $menu[$key]->addChild($childKey, $child)->setCurrent(true);
-                    }
+                    
+                    $this->renderChilds($menu[$key], $attributes['childs']);
                 }
             }
         }
-
+        
         $renderer = new ListRenderer(new \Knp\Menu\Matcher\Matcher());
         return $renderer->render($menu);
+    }
+    
+    private function renderChilds($menu, array $childs)
+    {
+        foreach ($childs as $childKey => $child) {
+            if (! is_array($child)) {
+                break;
+            }
+            if (is_null($menu)) {
+                throw new \Exception("Error! no menu defined!");
+            }
+            $menu->addChild($childKey, $child);
+            
+            if (isset($child['childs'])) {
+                $this->renderChilds($menu[$childKey], $child['childs']);
+            }
+            if (isset($attributes['route']) && $this->activeRoute === $child['route']) {
+                $menu->addChild($childKey, $child)->setCurrent(true);
+            }
+        }
     }
 }
