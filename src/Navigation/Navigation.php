@@ -90,7 +90,7 @@ class Navigation
             if (isset($child['childs'])) {
                 $this->renderChilds($menu[$childKey], $child['childs']);
             }
-            if (isset($attributes['route']) && $this->activeRoute === $child['route']) {
+            if (isset($child['route']) && $this->activeRoute === $child['route']) {
                 $menu->addChild($childKey, $child)->setCurrent(true);
             }
         }
