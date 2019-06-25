@@ -3,6 +3,7 @@
 namespace depa\NavigationMiddleware\Navigation;
 
 use Interop\Container\ContainerInterface;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\ServiceManager\Factory\AbstractFactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -65,7 +66,13 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $config = $this->getConfig($container);
-        return new Navigation($config[$requestedName]['data']);
+        $router = $container->get(RouterInterface::class);
+        $naviStructure = $config[$requestedName]['data'];
+        $debug = $container->get('config')['debug'];
+        if($debug !== TRUE){
+            $debug = false;
+        }
+        return new Navigation($naviStructure, $router, $debug);
     }
 
     /**

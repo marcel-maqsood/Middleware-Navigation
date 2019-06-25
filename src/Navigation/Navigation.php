@@ -4,6 +4,7 @@ namespace depa\NavigationMiddleware\Navigation;
 
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;
+use mysql_xdevapi\Exception;
 
 class Navigation
 {
@@ -13,9 +14,15 @@ class Navigation
 
     private $routeParams;
 
-    public function __construct($navigationData)
+    private $router;
+
+    private $debug;
+
+    public function __construct($naviStructure, $router, $debug)
     {
-        $this->data = $navigationData;
+        $this->data = $naviStructure;
+        $this->router = $router;
+        $this->debug = $debug;
     }
 
     /**
@@ -23,7 +30,8 @@ class Navigation
      *
      * @param string $activeRoute
      */
-    public function setRoute(string $activeRoute){
+    public function setRoute(string $activeRoute)
+    {
         $this->activeRoute = $activeRoute;
     }
 
@@ -32,7 +40,8 @@ class Navigation
      *
      * @param array $routeParams
      */
-    public function setParams(array $routeParams){
+    public function setParams(array $routeParams)
+    {
         $this->routeParams = $routeParams;
     }
 
@@ -41,7 +50,8 @@ class Navigation
      *
      * @return mixed
      */
-    public function getRoute() : string{
+    public function getRoute(): string
+    {
         return $this->activeRoute;
     }
 
@@ -50,7 +60,8 @@ class Navigation
      *
      * @return array
      */
-    public function getParams() : array{
+    public function getParams(): array
+    {
         return $this->routeParams;
     }
 
@@ -58,40 +69,55 @@ class Navigation
     {
         $factory = new MenuFactory();
         $menu = $factory->createItem('My menu');
-        foreach ($this->data as $key => $attributes) {
-            $menu->addChild($key, $attributes);
-            if (isset($attributes['route']) && $this->activeRoute === $attributes['route']) {
-                $menu->addChild($key, $attributes)->setCurrent(true);
-            }
-            if (isset($attributes['childs'])) {
-                foreach ($attributes['childs'] as $childKey => $child) {
-                    $menu[$key]->addChild($childKey, $child);
-                    
-                    $this->renderChilds($menu[$key], $attributes['childs']);
+        foreach ($this->data as $key => $item) {
+            try {
+                if (!isset($item['uri'])) {
+                    if (isset($item['route'])) {
+                        $item['uri'] = $this->router->generateUri($item['route']);
+                    }
+                }
+                $menu->addChild($key, $item);
+                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== FALSE) {
+                    $menu->addChild($key, $item)->setCurrent(true);
+                }
+                if (isset($item['childs'])) {
+                    $this->renderChilds($menu[$key], $item['childs']);
+                }
+            } catch (\Exception $e) {
+                if ($this->debug) {
+                    throw new \Exception($e->getMessage());
                 }
             }
         }
-        
         $renderer = new ListRenderer(new \Knp\Menu\Matcher\Matcher());
         return $renderer->render($menu);
     }
-    
+
     private function renderChilds($menu, array $childs)
     {
-        foreach ($childs as $childKey => $child) {
-            if (! is_array($child)) {
-                break;
-            }
-            if (is_null($menu)) {
-                throw new \Exception("Error! no menu defined!");
-            }
-            $menu->addChild($childKey, $child);
-            
-            if (isset($child['childs'])) {
-                $this->renderChilds($menu[$childKey], $child['childs']);
-            }
-            if (isset($child['route']) && $this->activeRoute === $child['route']) {
-                $menu->addChild($childKey, $child)->setCurrent(true);
+        foreach ($childs as $key => $item) {
+            try {
+                if (!is_array($item)) {
+                    throw new \Exception("Error! Child must be type of Array!");
+                }
+                if (!isset($item['uri'])) {
+                    if (isset($item['route'])) {
+                        $item['uri'] = $this->router->generateUri($item['route']);
+                    }
+                }
+                $menu->addChild($key, $item);
+
+                if (isset($item['childs'])) {
+                    $this->renderChilds($menu[$key], $item['childs']);
+                }
+                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== FALSE) {
+                    $menu->addChild($key, $item)->setCurrent(true);
+                }
+            } catch (\Exception $e) {
+
+                if ($this->debug) {
+                    throw new \Exception($e->getMessage());
+                }
             }
         }
     }
