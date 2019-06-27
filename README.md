@@ -37,7 +37,7 @@ the use the following inside your item:
 ]
 ```
 
-if you want to use attributes for the <ul>-item, 
+if you want to use attributes for the "ul HTML-element"-item, 
 then add (whatever you need of those) to the menu-item you just added:
 ```php
 'attributes' => [
@@ -47,7 +47,7 @@ then add (whatever you need of those) to the menu-item you just added:
 ],
 ```
 
-you might also want to define attributes to the <a>-item, 
+you might also want to define attributes to the "a HTML-element"-item, 
 if so add (whatever you need of those) the following:
 ```php
 'linkAttributes' => [
