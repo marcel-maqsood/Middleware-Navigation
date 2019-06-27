@@ -14,48 +14,101 @@ $ composer require depa/middleware-navigation
 ## Documentation
 
 To create a navigation, use the navigation.global.php (it's inside the config folder)
-as your basic (put it into config/autoload)
+as your basic (put it into config\autoload)
 
-
-if you want to add a menu-item to the navigation, 
-provide the following structure inside of the data array: 
+The basic structure of a menu-item must look like this:
 ```php
-'{navigationpoint}' => [
-    'uri' => '{path}', //if not set, the navigation will try to get a link by the route-name
-    'route' => '{route}', //route-name of route (e.g. FastRoute)
-    ];
-```
-
-if you want to use sub-items on the one you just created,
-the use the following inside your item:
-```php
-'childs' => [
-    'child1' => [
-        'uri' => '{path}',
-        'route' => '{route}',
-    ],
+'{navigation_Name}' => [
+    'route' => '{route_name}', //route-name which is set in routes.php
 ]
 ```
 
-if you want to use attributes for the "ul HTML-element"-item, 
-then add (whatever you need of those) to the menu-item you just added:
+<br/>
+
+if you want to add attributes to a menu-item (to the ul element), do this:
 ```php
-'attributes' => [
-    'id' => '{id}',
-    'class' => '{classes seperated by space}', //if not set, default is 'current' and used to provide highlighting
-    'label' => '{label}',   
-],
+'{navigation_Name}' => [
+    'attributes' => [...], //possibilitys in attributes-table described (at the bottom of the doc)
+]
 ```
 
-you might also want to define attributes to the "a HTML-element"-item, 
-if so add (whatever you need of those) the following:
+<br/>
+
+if you want to add link-attributes to a menu-item (to the a element), do this:
 ```php
-'linkAttributes' => [
-    'id' => '{id}',
-    'class' => '{classes seperated by space}',
-    'target' => '{target}' //example: '_blank'
-],
+'{navigation_Name}' => [
+    'linkAttributes' => [...], //possibilitys in link-attributes-table described (at the bottom of the doc)
+]
 ```
+
+<br/>
+
+if you want to add child-items to a menu-item, do this (you can use as many as you want):
+```php
+'{navigation_Name}' => [
+    'childs' => [...], //build the same as a normal menu-item
+]
+```
+
+<br/>
+
+if you want to force a link-direction to an item then add this:
+
+```php
+'{navigation_Name}' => [
+    'uri' => '{https://www.designpark.de}',
+]
+```
+
+<br/>
+
+a menu-item which contains any of the given examples could look like this:
+```php
+'{navigation_Name}' => [
+    'route' => '{route_name}',
+    'uri' => '{https://www.designpark.de}',
+    'attributes' => [
+        'id' => '{some_id}',
+        'class' => ['{class1} {class2}'],
+    ],
+    'linkAttributes' => [
+        'id' => '{some_id}',
+        'class' => '{class_1} {class2}',
+    ],
+    'childs' => [
+        '{navigation_Name}' => [
+            'route' => '{route_name}',
+            'uri' => '{https://www.designpark.de}',
+            'attributes' => [...],
+            'linkAttributes' => [...],
+            'childs' => [...]
+        ]
+    ]
+]
+```
+
+<br/>
+
+Attributes you could use and what they do:
+
+|Attribute|Description|Example
+|---------|-----------|-------|
+|  Id     |  Sets the id of the element  |  'id' => 'some_id'
+|  class  |  Sets the classes of the elements  |  'class' => 'class1 class2'|
+
+
+<br/>
+
+Link-Attributes you could use and what they do:
+
+|Attribute|Description|Example
+|---------|-----------|------|
+|  Id     |  Sets the id of the element | 'id' => 'some_id'
+|  Class  |  Sets the classes of the element  |  'class' => 'class1 class2'
+|  Target |  Sets the target-window of the element  |  'target' => '_blank'
+
+
+we did not listed every link-/attribute, take a closer look at [knpLabs/KnpMenu](https://github.com/KnpLabs/KnpMenu/blob/master/doc/01-Basic-Menus.markdown#menu-attributes) for more informations!
 
 ## Credits
 
