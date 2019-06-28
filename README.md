@@ -13,6 +13,14 @@ $ composer require depa/middleware-navigation
 
 ## Documentation
 
+After installing the module, you have to implement the navigation-middleware into your pipeline,
+so you basically add this line above the RouteMiddleware:
+```php
+     $app->pipe(depa\NavigationMiddleware\Middleware\NavigationMiddleware::class);
+```
+
+<br/>
+
 To create a navigation, use the navigation.global.php (it's inside the config folder)
 as your basic (put it into config\autoload)
 
