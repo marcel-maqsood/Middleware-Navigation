@@ -76,16 +76,43 @@ a menu-item which contains any of the given examples could look like this:
         'class' => '{class_1} {class2}',
     ],
     'childs' => [
-        '{navigation_Name}' => [
+        '{childNavigation_Name}' => [
             'route' => '{route_name}',
             'uri' => '{https://www.designpark.de}',
-            'attributes' => [...],
-            'linkAttributes' => [...],
-            'childs' => [...]
+            'attributes' => [],
+            'linkAttributes' => [],
+            'childs' => [],
         ]
     ]
 ]
 ```
+
+<br/>
+
+The example provided above would output the following HTML:
+```
+<ul>
+    <li id="{some_id} class="{class1 class2} first last">
+        <a href="{https://www.designpark.de}">{navigationName}</a>
+        <ul class="menu_level_1">
+            <li class="first last">
+                <a href="{https://www.designpark.de}">{childNavigationName}</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+```
+which would look like this:
+<ul>
+    <li id="{some_id} class="{class1 class2} first last">
+        <a href="{https://www.designpark.de}">{navigationName}</a>
+        <ul class="menu_level_1">
+            <li class="first last">
+                <a href="{https://www.designpark.de}">{childNavigationName}</a>
+            </li>
+        </ul>
+    </li>
+</ul>
 
 <br/>
 
@@ -109,6 +136,8 @@ Link-Attributes you could use and what they do:
 
 
 we did not listed every link-/attribute, take a closer look at [knpLabs/KnpMenu](https://github.com/KnpLabs/KnpMenu/blob/master/doc/01-Basic-Menus.markdown#menu-attributes) for more informations!
+
+
 
 ## Credits
 
