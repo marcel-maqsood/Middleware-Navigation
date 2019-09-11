@@ -4,7 +4,6 @@ namespace depa\NavigationMiddleware\Navigation;
 
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;
-use mysql_xdevapi\Exception;
 
 class Navigation
 {
@@ -56,7 +55,7 @@ class Navigation
     }
 
     /**
-     * Gibt die momentan vorhanden Parameter zurück
+     * Gibt die momentan vorhanden Parameter zurück.
      *
      * @return array
      */
@@ -77,7 +76,7 @@ class Navigation
                     }
                 }
                 $menu->addChild($key, $item);
-                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== FALSE) {
+                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== false) {
                     $menu->addChild($key, $item)->setCurrent(true);
                 }
                 if (isset($item['childs'])) {
@@ -90,6 +89,7 @@ class Navigation
             }
         }
         $renderer = new ListRenderer(new \Knp\Menu\Matcher\Matcher());
+
         return $renderer->render($menu);
     }
 
@@ -98,7 +98,7 @@ class Navigation
         foreach ($childs as $key => $item) {
             try {
                 if (!is_array($item)) {
-                    throw new \Exception("Error! Child must be type of Array!");
+                    throw new \Exception('Error! Child must be type of Array!');
                 }
                 if (!isset($item['uri'])) {
                     if (isset($item['route'])) {
@@ -110,11 +110,10 @@ class Navigation
                 if (isset($item['childs'])) {
                     $this->renderChilds($menu[$key], $item['childs']);
                 }
-                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== FALSE) {
+                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== false) {
                     $menu->addChild($key, $item)->setCurrent(true);
                 }
             } catch (\Exception $e) {
-
                 if ($this->debug) {
                     throw new \Exception($e->getMessage());
                 }

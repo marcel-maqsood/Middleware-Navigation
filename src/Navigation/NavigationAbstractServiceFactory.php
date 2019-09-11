@@ -23,7 +23,7 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * Can we create a navigation by the requested name?
      *
      * @param ContainerInterface $container
-     * @param string $requestedName
+     * @param string             $requestedName
      *
      * @return bool
      */
@@ -44,8 +44,8 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * Determine if we can create a service with name (SM v2 compatibility).
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @param string $name
-     * @param string $requestedName
+     * @param string                  $name
+     * @param string                  $requestedName
      *
      * @return bool
      */
@@ -58,8 +58,8 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * Create a DB adapter.
      *
      * @param ContainerInterface $container
-     * @param string $requestedName
-     * @param array $options
+     * @param string             $requestedName
+     * @param array              $options
      *
      * @return Navigation
      */
@@ -69,9 +69,10 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
         $router = $container->get(RouterInterface::class);
         $naviStructure = $config[$requestedName]['data'];
         $debug = $container->get('config')['debug'];
-        if($debug !== TRUE){
+        if ($debug !== true) {
             $debug = false;
         }
+
         return new Navigation($naviStructure, $router, $debug);
     }
 
@@ -79,8 +80,8 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      * Create service with name.
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @param string $name
-     * @param string $requestedName
+     * @param string                  $name
+     * @param string                  $requestedName
      *
      * @return Navigation
      */
@@ -121,7 +122,6 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
         if (!isset($config['navigations'])
             || !is_array($config['navigations'])
         ) {
-
             $this->config = $config;
 
             return $this->config;

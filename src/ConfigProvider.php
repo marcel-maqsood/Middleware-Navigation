@@ -28,11 +28,11 @@ class ConfigProvider
                 Navigation\NavigationAbstractServiceFactory::class,
             ],
             'factories' => [
-                Navigation\Navigation::class => Navigation\NavigationServiceFactory::class,
-                Middleware\NavigationMiddleware::class => Middleware\NavigationMiddlewareFactory::class
+                Navigation\Navigation::class           => Navigation\NavigationServiceFactory::class,
+                Middleware\NavigationMiddleware::class => Middleware\NavigationMiddlewareFactory::class,
             ],
             'aliases' => [
-                'navigation' => Navigation\Navigation::class
+                'navigation' => Navigation\Navigation::class,
             ],
         ];
     }

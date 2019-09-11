@@ -2,19 +2,14 @@
 
 namespace depa\NavigationMiddleware\Middleware;
 
-
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Authorization\AuthorizationInterface;
-use Zend\Expressive\Authorization\Rbac\ZendRbac;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
-
 
 class NavigationMiddlewareFactory
 {
     public function __invoke(ContainerInterface $container, $requestedName): NavigationMiddleware
     {
-
         if (!isset($container->get('config')['depaNavigation'])) {
             throw new \Exception('Die Config beinhaltet keinen Navigations-Eintrag (depaNavigation)!');
         }
@@ -29,10 +24,12 @@ class NavigationMiddlewareFactory
             }
 
             $navigationConfigArray = $container->get('config')['depaNavigation'];
+
             return $this->createNavigationObjects($navigationConfigArray, $container);
         }
 
         $navigationConfigArray = $container->get('config')['depaNavigation']['navigations'];
+
         return $this->createNavigationObjects($navigationConfigArray, $container);
     }
 
@@ -46,7 +43,6 @@ class NavigationMiddlewareFactory
         }
         $router = $container->get(RouterInterface::class);
 
-        return new NavigationMiddleware($navigationObjects, $container->get(TemplateRendererInterface::class),$router);
+        return new NavigationMiddleware($navigationObjects, $container->get(TemplateRendererInterface::class), $router);
     }
 }
-

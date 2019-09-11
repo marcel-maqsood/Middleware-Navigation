@@ -29,51 +29,50 @@ return [
             'Application\depaNavigation\AppNavigation' => [
                 'data' => [
                     'admNavi' => [
-                        'uri' => '/adminnavi',
+                        'uri'        => '/adminnavi',
                         'attributes' => [
-                            'id' => 'l',
-                            'class ' => 'Test_class'
+                            'id'     => 'l',
+                            'class ' => 'Test_class',
                         ],
-                        'route' => 'adminNavi',
+                        'route'  => 'adminNavi',
                         'childs' => [
                             'subpath' => [
-                                'uri' => '/appnavi',
+                                'uri'        => '/appnavi',
                                 'attributes' => [
-                                    'id' => 'l',
-                                    'class ' => 'Test2_class'
+                                    'id'     => 'l',
+                                    'class ' => 'Test2_class',
                                 ],
                                 'route' => 'appNavi',
                             ],
                         ],
                     ],
                 ],
-                'permission_manager' => 'rbac'
+                'permission_manager' => 'rbac',
             ],
 
             'Application\depaNavigation\AdminNavigation' => [
                 'data' => [
                     'admin1' => [
-                        'uri' => '/appnavi',
+                        'uri'        => '/appnavi',
                         'attributes' => [
-                            'id' => 'l',
-                            'class ' => 'Test_class'
+                            'id'     => 'l',
+                            'class ' => 'Test_class',
                         ],
-                        'route' => 'appnavi',
+                        'route'  => 'appnavi',
                         'childs' => [
                             'subadmin' => [
-                                'uri' => '/adminnavi',
-                                'route' => 'adminNavi'
+                                'uri'   => '/adminnavi',
+                                'route' => 'adminNavi',
                             ],
                         ],
                     ],
                     'admin2' => [
-                        'uri' => '/adminnavi',
-                        'route' => 'adminNavi'
+                        'uri'   => '/adminnavi',
+                        'route' => 'adminNavi',
                     ],
                 ],
-                'permission_manager' => 'rbac'
+                'permission_manager' => 'rbac',
             ],
         ],
     ],
 ];
-

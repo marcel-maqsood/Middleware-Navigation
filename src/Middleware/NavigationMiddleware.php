@@ -7,8 +7,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Expressive\Router\RouteResult;
-use Zend\Navigation\AbstractContainer;
-use Zend\Navigation\Exception;
 
 /**
  * Pipeline middleware for injecting Navigations with a RouteResult.
@@ -20,6 +18,7 @@ class NavigationMiddleware implements MiddlewareInterface
     private $renderer;
 
     private $router;
+
     /**
      * @param NavigationObjects[] $navigationObjects
      */
@@ -31,13 +30,12 @@ class NavigationMiddleware implements MiddlewareInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
 
         //$routeResult = $request->getAttribute(RouteResult::class, false);
         $routeResult = $this->router->match($request);
@@ -50,6 +48,7 @@ class NavigationMiddleware implements MiddlewareInterface
             $navigationObj->setParams($routeResult->getMatchedParams());
             $this->renderer->addDefaultParam($this->renderer::TEMPLATE_ALL, substr($navigationName, strrpos($navigationName, '\\') + 1), $navigationObj->render());
         }
+
         return $handler->handle($request);
     }
 }
