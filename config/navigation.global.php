@@ -35,6 +35,9 @@ return [
                             'class ' => 'Test_class',
                         ],
                         'route'  => 'adminNavi',
+                        'routeArguments' => [
+                            'locale' => 'en',
+                        ],
                         'childs' => [
                             'subpath' => [
                                 'uri'        => '/appnavi',

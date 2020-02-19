@@ -70,9 +70,12 @@ class Navigation
         $menu = $factory->createItem('My menu');
         foreach ($this->data as $key => $item) {
             try {
+                if(!isset($item['routeArguments'])){
+                    $item['routeArguments'] = [];
+                }
                 if (!isset($item['uri'])) {
                     if (isset($item['route'])) {
-                        $item['uri'] = $this->router->generateUri($item['route']);
+                        $item['uri'] = $this->router->generateUri($item['route'], $item['routeArguments']);
                     }
                 }
                 $menu->addChild($key, $item);
@@ -100,9 +103,12 @@ class Navigation
                 if (!is_array($item)) {
                     throw new \Exception('Error! Child must be type of Array!');
                 }
+                if(!isset($item['routeArguments'])){
+                    $item['routeArguments'] = [];
+                }
                 if (!isset($item['uri'])) {
                     if (isset($item['route'])) {
-                        $item['uri'] = $this->router->generateUri($item['route']);
+                        $item['uri'] = $this->router->generateUri($item['route'], $item['routeArguments']);
                     }
                 }
                 $menu->addChild($key, $item);
