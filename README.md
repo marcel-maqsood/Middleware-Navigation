@@ -38,6 +38,13 @@ if you want to add attributes to a menu-item (to the ul element), do this:
 ]
 ```
 
+You could also add a nice little icon infront of your List Item by configuring it like that:
+```php
+'{navigation_Name}' => [
+    'display' => 'fas fa-home nav-icon' // Would display a home icon infront of your link
+]
+```
+
 <br/>
 
 if you want to add link-attributes to a menu-item (to the a element), do this:
@@ -68,9 +75,10 @@ if you want to force a link-direction to an item then add this:
 
 <br/>
 
-a menu-item which contains any of the given examples could look like this:
+A menu-item which contains any of the given examples could look like this:
 ```php
 '{navigation_Name}' => [
+    'display' => 'fas fa-home nav-icon'
     'route' => '{route_name}',
     'uri' => '{https://www.technikhafen.de}',
     'attributes' => [
@@ -83,6 +91,7 @@ a menu-item which contains any of the given examples could look like this:
     ],
     'childs' => [
         '{childNavigation_Name}' => [
+            'display' => 'fas fa-home nav-icon'
             'route' => '{route_name}',
             'uri' => '{https://www.technikhafen.de}',
             'attributes' => [],
@@ -108,19 +117,58 @@ The example provided above would output the following HTML:
     </li>
 </ul>
 ```
-which would look like this:
+
+Which would look like this:
 <ul>
-    <li id="{some_id} class="{class1 class2} first last">
-        <a href="{https://www.technikhafen.de}">{navigationName}</a>
+    <li id="{some_id}" class="{class1 class2} first last">
+        <a href="{https://www.technikhafen.de}">
+            <i class="fas fa-tachometer-alt nav-icon"></i>
+            {navigationName}
+        </a>
         <ul class="menu_level_1">
             <li class="first last">
-                <a href="{https://www.technikhafen.de}">{childNavigationName}</a>
+                <a href="{https://www.technikhafen.de}">
+                    <i class="fas fa-tachometer-alt nav-icon"></i>
+                    {childNavigationName}
+                </a>
             </li>
         </ul>
     </li>
 </ul>
 
 <br/>
+
+Keep in mind that at some point you either have to add our Middleware: NavigationMiddleware inside of your pipeline (that way you will always be able to use the rendered menu):
+## This way is not possible yet, you have to include it in every route - we are working on a solution. ##
+```
+ $app->pipe(NavigationMiddleware::class);
+```
+
+or within your routes:
+
+```
+$app->route('/user[/]',
+        [
+            MazeDEV\SessionAuth\SessionAuthMiddleware::class,
+            MazeDEV\NavigationMiddleware\Middleware\NavigationMiddleware::class,
+            MazeDEV\SessionAuth\LoginHandler\GlobalLoginHandler::class
+        ],
+        [
+            'GET',
+            'POST'
+        ],
+        'userLogin'
+    );
+```
+
+But as stated above, it is way easier to just add it to your pipeline.
+
+
+#### Permission based Naviagation ####
+Our NavigationMiddleware is capable of rendering only navigation elements, that  the user has permissions for.
+This is achived by including our [SessionAuthMiddleware](https://github.com/marcel-maqsood/Mezzio-Session-Auth-Middleware/)
+The NaviagationMiddleware will only check for permissions if the SAM is present, otherwise it will render every element you supplied.
+
 
 Attributes you could use and what they do:
 

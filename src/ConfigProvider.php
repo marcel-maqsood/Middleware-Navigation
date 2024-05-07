@@ -28,7 +28,7 @@ class ConfigProvider
                 Navigation\NavigationAbstractServiceFactory::class,
             ],
             'factories' => [
-                Navigation\Navigation::class           => Navigation\NavigationServiceFactory::class,
+                Navigation\Navigation::class           => Navigation\NavigationAbstractServiceFactory::class,//Navigation\NavigationServiceFactory::class,
                 Middleware\NavigationMiddleware::class => Middleware\NavigationMiddlewareFactory::class,
             ],
             'aliases' => [

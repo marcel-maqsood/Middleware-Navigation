@@ -1,6 +1,6 @@
 <?php
 
-namespace depa\NavigationMiddleware\Middleware;
+namespace MazeDEV\NavigationMiddleware\Middleware;
 
 use Psr\Container\ContainerInterface;
 use Mezzio\Router\RouterInterface;
@@ -22,11 +22,6 @@ class NavigationMiddlewareFactory
 
         if (!isset($container->get('config')['mazenav']['navigations'])) 
         {
-            if (!isset($container->get('config')['mazenav'])) 
-            {
-                throw new \Exception('Die Config beinhaltet keine Navigation (mazenav)!');
-            }
-
             $navigationConfigArray = $container->get('config')['mazenav'];
 
             return $this->createNavigationObjects($navigationConfigArray, $container);

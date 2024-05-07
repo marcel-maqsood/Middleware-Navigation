@@ -5,6 +5,8 @@ namespace MazeDEV\NavigationMiddleware\Navigation;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Mezzio\Router\RouterInterface;
+use MazeDEV\SessionAuth\SessionAuthMiddleware;
 
 class NavigationServiceFactory implements FactoryInterface
 {
@@ -21,9 +23,14 @@ class NavigationServiceFactory implements FactoryInterface
     {
         $config = $container->get('config');
 
-        $sessionAuthMiddleware = $container->get(MazeDEV\SessionAuth\SessinAuthMiddleware::class) ?? null;
+        $sessionAuthMiddleware = $container->get(SessionAuthMiddleware::class) ?? null;
+		$router = $container->get(RouterInterface::class) ?? null;
+		if($router == null)
+		{
+			throw new \Exception('router service not found, you need atleast one RouterInterface within your application running.');
+		}
 
-        return new Navigation($config['mazenav']);
+        return new Navigation($config['mazenav'], $router, $sessionAuthMiddleware);
     }
 
     /**

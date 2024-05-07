@@ -3,7 +3,8 @@
 namespace MazeDEV\NavigationMiddleware\Navigation;
 
 use Interop\Container\ContainerInterface;
-use Zend\Expressive\Router\RouterInterface;
+use MazeDEV\SessionAuth\SessionAuthMiddleware;
+use Mezzio\Router\RouterInterface;
 use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
@@ -68,14 +69,15 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
     {
         $config = $this->getConfig($container);
         $router = $container->get(RouterInterface::class);
+		$sessionAuthMiddleware = $container->get(SessionAuthMiddleware::class) ?? null;
         $naviStructure = $config[$requestedName]['data'];
         $debug = $container->get('config')['debug'];
-        if ($debug !== true) 
+        if ($debug !== true)
         {
             $debug = false;
         }
 
-        return new Navigation($naviStructure, $router, $debug);
+        return new Navigation($naviStructure, $router, $sessionAuthMiddleware, $debug);
     }
 
     /**

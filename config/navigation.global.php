@@ -1,57 +1,47 @@
 <?php
 
+declare(strict_types=1);
+
+use MazeDEV\NavigationMiddleware\Navigation\Navigation;
+
 return [
     'mazenav' => [
-        'navigations' => [
-            'userNavigation' => [
-                'data' => [
-                    'admNavi' => [
-                        'uri'        => '/adminnavi',
-                        'attributes' => [
-                            'id'     => 'l',
-                            'class ' => 'Test_class',
-                        ],
-                        'route'  => 'adminNavi',
-                        'routeArguments' => [
-                            'locale' => 'en',
-                        ],
-                        'childs' => [
-                            'subpath' => [
-                                'uri'        => '/appnavi',
-                                'attributes' => [
-                                    'id'     => 'l',
-                                    'class ' => 'Test2_class',
-                                ],
-                                'route' => 'appNavi',
-                            ],
-                        ],
+        Navigation::class => [
+            'data'               => [
+                'Teilnehmerbereich'  => [
+                    'display'        => 'fas fa-home nav-icon',
+                    'route'          => 'home',
+                    'attributes'     => [
+                        'id'     => '_user_landing_',
+                        'class ' => 'nav-item menu-open',
+                    ],
+                    'linkAttributes' => [
+                        'id'    => '_',
+                        'class' => 'nav-link',
                     ],
                 ],
-                'permission_manager' => 'rbac',
-            ],
-
-            'adminNavigation' => [
-                'data' => [
-                    'admin1' => [
-                        'uri'        => '/appnavi',
-                        'attributes' => [
-                            'id'     => 'l',
-                            'class ' => 'Test_class',
-                        ],
-                        'route'  => 'appnavi',
-                        'childs' => [
-                            'subadmin' => [
-                                'uri'   => '/adminnavi',
-                                'route' => 'adminNavi',
-                            ],
-                        ],
+                'User Dashboard' => [
+                    'display'        => 'fas fa-tachometer-alt nav-icon',
+                    'route'          => 'userLanding',
+                    'attributes'     => [
+                        'class ' => 'nav-item menu-open',
                     ],
-                    'admin2' => [
-                        'uri'   => '/adminnavi',
-                        'route' => 'adminNavi',
+                    'linkAttributes' => [
+                        'id'    => '_user_landing_',
+                        'class' => 'nav-link',
                     ],
                 ],
-                'permission_manager' => 'rbac',
+                'Admin Dashboard' => [
+                    'display'        => 'fas fa-tachometer-alt nav-icon',
+                    'route'          => 'adminLanding',
+                    'attributes'     => [
+                        'class ' => 'nav-item menu-open',
+                    ],
+                    'linkAttributes' => [
+                        'id'    => '_admin_landing_',
+                        'class' => 'nav-link',
+                    ],
+                ],
             ],
         ],
     ],
