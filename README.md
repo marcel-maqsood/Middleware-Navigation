@@ -139,7 +139,7 @@ Which would look like this:
 <br/>
 
 Keep in mind that at some point you either have to add our Middleware: NavigationMiddleware inside of your pipeline (that way you will always be able to use the rendered menu):
-## This way is not possible yet, you have to include it in every route - we are working on a solution. ##
+## This way is only working without permission checks, you have to include it in every route if you want to use the permission handling that our SessionAuthMiddleware provides. - we are working on a solution. ##
 ```
  $app->pipe(NavigationMiddleware::class);
 ```
