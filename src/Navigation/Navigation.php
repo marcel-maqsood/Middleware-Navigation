@@ -1,6 +1,6 @@
 <?php
 
-namespace depa\NavigationMiddleware\Navigation;
+namespace MazeDEV\NavigationMiddleware\Navigation;
 
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;
@@ -68,25 +68,34 @@ class Navigation
     {
         $factory = new MenuFactory();
         $menu = $factory->createItem('My menu');
-        foreach ($this->data as $key => $item) {
+        foreach ($this->data as $key => $item) 
+        {
             try {
-                if(!isset($item['routeArguments'])){
+                if(!isset($item['routeArguments']))
+                {
                     $item['routeArguments'] = [];
                 }
-                if (!isset($item['uri'])) {
-                    if (isset($item['route'])) {
+                if (!isset($item['uri'])) 
+                {
+                    if (isset($item['route'])) 
+                    {
                         $item['uri'] = $this->router->generateUri($item['route'], $item['routeArguments']);
                     }
                 }
                 $menu->addChild($key, $item);
-                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== false) {
+                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== false) 
+                {
                     $menu->addChild($key, $item)->setCurrent(true);
                 }
-                if (isset($item['childs'])) {
+                if (isset($item['childs'])) 
+                {
                     $this->renderChilds($menu[$key], $item['childs']);
                 }
-            } catch (\Exception $e) {
-                if ($this->debug) {
+            } 
+            catch (\Exception $e) 
+            {
+                if ($this->debug) 
+                {
                     throw new \Exception($e->getMessage());
                 }
             }
@@ -98,29 +107,40 @@ class Navigation
 
     private function renderChilds($menu, array $childs)
     {
-        foreach ($childs as $key => $item) {
-            try {
-                if (!is_array($item)) {
+        foreach ($childs as $key => $item) 
+        {
+            try 
+            {
+                if (!is_array($item)) 
+                {
                     throw new \Exception('Error! Child must be type of Array!');
                 }
-                if(!isset($item['routeArguments'])){
+                if(!isset($item['routeArguments']))
+                {
                     $item['routeArguments'] = [];
                 }
-                if (!isset($item['uri'])) {
-                    if (isset($item['route'])) {
+                if (!isset($item['uri'])) 
+                {
+                    if (isset($item['route'])) 
+                    {
                         $item['uri'] = $this->router->generateUri($item['route'], $item['routeArguments']);
                     }
                 }
                 $menu->addChild($key, $item);
 
-                if (isset($item['childs'])) {
+                if (isset($item['childs'])) 
+                {
                     $this->renderChilds($menu[$key], $item['childs']);
                 }
-                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== false) {
+                if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== false) 
+                {
                     $menu->addChild($key, $item)->setCurrent(true);
                 }
-            } catch (\Exception $e) {
-                if ($this->debug) {
+            } 
+            catch (\Exception $e) 
+            {
+                if ($this->debug) 
+                {
                     throw new \Exception($e->getMessage());
                 }
             }

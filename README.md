@@ -1,14 +1,12 @@
 # Middleware-Navigation
 
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![StyleCI](https://styleci.io/repos/183914100/shield?branch=master)](https://github.styleci.io/repos/183914100)
-[![Coverage Status](https://coveralls.io/repos/github/depa-berlin/Middleware-Navigation/badge.svg?branch=master)](https://coveralls.io/github/depa-berlin/Middleware-Navigation?branch=master)
+
 ## Installation
 
 Run the following to install this library:
 
 ```bash
-$ composer require depa/middleware-navigation
+$ composer require marcel-maqsood/middleware-navigation
 ```
 
 ## Documentation
@@ -16,7 +14,7 @@ $ composer require depa/middleware-navigation
 After installing the module, you have to implement the navigation-middleware into your pipeline,
 so you basically add this line above the RouteMiddleware:
 ```php
-     $app->pipe(depa\NavigationMiddleware\Middleware\NavigationMiddleware::class);
+     $app->pipe(MazeDEV\NavigationMiddleware\Middleware\NavigationMiddleware::class);
 ```
 
 <br/>
@@ -36,7 +34,7 @@ The basic structure of a menu-item must look like this:
 if you want to add attributes to a menu-item (to the ul element), do this:
 ```php
 '{navigation_Name}' => [
-    'attributes' => [...], //possibilitys in attributes-table described (at the bottom of the doc)
+    'attributes' => [...], //possibilities in attributes-table described (at the bottom of the doc)
 ]
 ```
 
@@ -45,7 +43,7 @@ if you want to add attributes to a menu-item (to the ul element), do this:
 if you want to add link-attributes to a menu-item (to the a element), do this:
 ```php
 '{navigation_Name}' => [
-    'linkAttributes' => [...], //possibilitys in link-attributes-table described (at the bottom of the doc)
+    'linkAttributes' => [...], //possibilities in link-attributes-table described (at the bottom of the doc)
 ]
 ```
 
@@ -64,7 +62,7 @@ if you want to force a link-direction to an item then add this:
 
 ```php
 '{navigation_Name}' => [
-    'uri' => '{https://www.designpark.de}',
+    'uri' => '{https://www.technikhafen.de}',
 ]
 ```
 
@@ -74,7 +72,7 @@ a menu-item which contains any of the given examples could look like this:
 ```php
 '{navigation_Name}' => [
     'route' => '{route_name}',
-    'uri' => '{https://www.designpark.de}',
+    'uri' => '{https://www.technikhafen.de}',
     'attributes' => [
         'id' => '{some_id}',
         'class' => ['{class1} {class2}'],
@@ -86,7 +84,7 @@ a menu-item which contains any of the given examples could look like this:
     'childs' => [
         '{childNavigation_Name}' => [
             'route' => '{route_name}',
-            'uri' => '{https://www.designpark.de}',
+            'uri' => '{https://www.technikhafen.de}',
             'attributes' => [],
             'linkAttributes' => [],
             'childs' => [],
@@ -101,10 +99,10 @@ The example provided above would output the following HTML:
 ```
 <ul>
     <li id="{some_id} class="{class1 class2} first last">
-        <a href="{https://www.designpark.de}">{navigationName}</a>
+        <a href="{https://www.technikhafen.de}">{navigationName}</a>
         <ul class="menu_level_1">
             <li class="first last">
-                <a href="{https://www.designpark.de}">{childNavigationName}</a>
+                <a href="{https://www.technikhafen.de}">{childNavigationName}</a>
             </li>
         </ul>
     </li>
@@ -113,10 +111,10 @@ The example provided above would output the following HTML:
 which would look like this:
 <ul>
     <li id="{some_id} class="{class1 class2} first last">
-        <a href="{https://www.designpark.de}">{navigationName}</a>
+        <a href="{https://www.technikhafen.de}">{navigationName}</a>
         <ul class="menu_level_1">
             <li class="first last">
-                <a href="{https://www.designpark.de}">{childNavigationName}</a>
+                <a href="{https://www.technikhafen.de}">{childNavigationName}</a>
             </li>
         </ul>
     </li>
@@ -143,13 +141,13 @@ Link-Attributes you could use and what they do:
 |  Target |  Sets the target-window of the element  |  'target' => '_blank'
 
 
-we did not listed every link-/attribute, take a closer look at [knpLabs/KnpMenu](https://github.com/KnpLabs/KnpMenu/blob/master/doc/01-Basic-Menus.markdown#menu-attributes) for more informations!
+We did not listed every link-/attribute, take a closer look at [knpLabs/KnpMenu](https://github.com/KnpLabs/KnpMenu/) for more informations!
 
 
 
 ## Credits
 
-This bundle is inspired by [Zend Framework](https://framework.zend.com). It has been developed by [designpark](https://www.designpark.de).
+This Software has been developed by MazeDEV/Marcel-Maqsood(https://github.com/marcel-maqsood/).
 
 
 ## License

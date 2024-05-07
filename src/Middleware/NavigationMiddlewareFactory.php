@@ -3,32 +3,36 @@
 namespace depa\NavigationMiddleware\Middleware;
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Router\RouterInterface;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Mezzio\Router\RouterInterface;
+use Mezzio\Template\TemplateRendererInterface;
 
 class NavigationMiddlewareFactory
 {
     public function __invoke(ContainerInterface $container, $requestedName): NavigationMiddleware
     {
-        if (!isset($container->get('config')['depaNavigation'])) {
-            throw new \Exception('Die Config beinhaltet keinen Navigations-Eintrag (depaNavigation)!');
+        if (!isset($container->get('config')['mazenav'])) 
+        {
+            throw new \Exception('Die Config beinhaltet keinen Navigations-Eintrag (mazenav)!');
         }
 
-        if (!is_array($container->get('config')['depaNavigation'])) {
-            throw new \Exception('Die Definition einer Navigation muss ein Array sein (depaNavigation)!');
+        if (!is_array($container->get('config')['mazenav'])) 
+        {
+            throw new \Exception('Die Definition einer Navigation muss ein Array sein (mazenav)!');
         }
 
-        if (!isset($container->get('config')['depaNavigation']['navigations'])) {
-            if (!isset($container->get('config')['depaNavigation'])) {
-                throw new \Exception('Die Config beinhaltet keine Navigation (depaNavigation)!');
+        if (!isset($container->get('config')['mazenav']['navigations'])) 
+        {
+            if (!isset($container->get('config')['mazenav'])) 
+            {
+                throw new \Exception('Die Config beinhaltet keine Navigation (mazenav)!');
             }
 
-            $navigationConfigArray = $container->get('config')['depaNavigation'];
+            $navigationConfigArray = $container->get('config')['mazenav'];
 
             return $this->createNavigationObjects($navigationConfigArray, $container);
         }
 
-        $navigationConfigArray = $container->get('config')['depaNavigation']['navigations'];
+        $navigationConfigArray = $container->get('config')['mazenav']['navigations'];
 
         return $this->createNavigationObjects($navigationConfigArray, $container);
     }
@@ -36,8 +40,10 @@ class NavigationMiddlewareFactory
     private function createNavigationObjects($navigationConfigArray, $container)
     {
         $navigationObjects = [];
-        foreach ($navigationConfigArray as $navigationName => $naviParams) {
-            if ($container->get($navigationName) instanceof \depa\NavigationMiddleware\Navigation\Navigation) {
+        foreach ($navigationConfigArray as $navigationName => $naviParams)
+        {
+            if ($container->get($navigationName) instanceof \MazeDEV\NavigationMiddleware\Navigation\Navigation) 
+            {
                 $navigationObjects[$navigationName] = $container->get($navigationName);
             }
         }

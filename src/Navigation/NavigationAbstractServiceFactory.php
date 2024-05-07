@@ -1,11 +1,11 @@
 <?php
 
-namespace depa\NavigationMiddleware\Navigation;
+namespace MazeDEV\NavigationMiddleware\Navigation;
 
 use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
-use Zend\ServiceManager\Factory\AbstractFactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\AbstractFactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Database adapter abstract service factory.
@@ -30,7 +30,8 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
     public function canCreate(ContainerInterface $container, $requestedName)
     {
         $config = $this->getConfig($container);
-        if (empty($config)) {
+        if (empty($config)) 
+        {
             return false;
         }
 
@@ -69,7 +70,8 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
         $router = $container->get(RouterInterface::class);
         $naviStructure = $config[$requestedName]['data'];
         $debug = $container->get('config')['debug'];
-        if ($debug !== true) {
+        if ($debug !== true) 
+        {
             $debug = false;
         }
 
@@ -99,29 +101,33 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
      */
     protected function getConfig(ContainerInterface $container)
     {
-        if ($this->config !== null) {
+        if ($this->config !== null) 
+        {
             return $this->config;
         }
 
-        if (!$container->has('config')) {
+        if (!$container->has('config')) 
+        {
             $this->config = [];
 
             return $this->config;
         }
 
         $config = $container->get('config');
-        if (!isset($config['depaNavigation'])
-            || !is_array($config['depaNavigation'])
-        ) {
+        if (!isset($config['mazenav'])
+            || !is_array($config['mazenav'])
+        ) 
+        {
             $this->config = [];
 
             return $this->config;
         }
 
-        $config = $config['depaNavigation'];
+        $config = $config['mazenav'];
         if (!isset($config['navigations'])
             || !is_array($config['navigations'])
-        ) {
+        ) 
+        {
             $this->config = $config;
 
             return $this->config;

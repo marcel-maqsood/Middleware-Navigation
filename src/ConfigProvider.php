@@ -1,6 +1,6 @@
 <?php
 
-namespace depa\NavigationMiddleware;
+namespace MazeDEV\NavigationMiddleware;
 
 class ConfigProvider
 {

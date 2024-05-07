@@ -1,32 +1,9 @@
 <?php
 
 return [
-    'depaNavigation' => [
-        /*'Application\depaNavigation\DefaultNavigation' => [
-            'data' => [
-                'irgendwas' => [
-                    'uri' => 'https://designpark.de',
-                    'attributes' => [
-                        'id' => 'l',
-                        'class ' => 'Test_class'
-                    ],
-                    'route' => 'adminNavi',
-                    'childs' => [
-                        'subpath' => [
-                            'uri' => '/appnavi',
-                            'attributes' => [
-                                'id' => 'l',
-                                'class ' => 'Test2_class'
-                            ],
-                            'route' => 'appNavi',
-                        ]
-                    ]
-                ]
-            ],
-            'permission_manager' => 'rbac'
-        ],*/
+    'mazenav' => [
         'navigations' => [
-            'Application\depaNavigation\AppNavigation' => [
+            'userNavigation' => [
                 'data' => [
                     'admNavi' => [
                         'uri'        => '/adminnavi',
@@ -53,7 +30,7 @@ return [
                 'permission_manager' => 'rbac',
             ],
 
-            'Application\depaNavigation\AdminNavigation' => [
+            'adminNavigation' => [
                 'data' => [
                     'admin1' => [
                         'uri'        => '/appnavi',

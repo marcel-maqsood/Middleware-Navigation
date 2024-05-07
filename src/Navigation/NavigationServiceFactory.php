@@ -1,18 +1,10 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/).
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- *
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
 
-namespace depa\NavigationMiddleware\Navigation;
+namespace MazeDEV\NavigationMiddleware\Navigation;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class NavigationServiceFactory implements FactoryInterface
 {
@@ -29,7 +21,9 @@ class NavigationServiceFactory implements FactoryInterface
     {
         $config = $container->get('config');
 
-        return new Navigation($config['depaNavigation']);
+        $sessionAuthMiddleware = $container->get(MazeDEV\SessionAuth\SessinAuthMiddleware::class) ?? null;
+
+        return new Navigation($config['mazenav']);
     }
 
     /**

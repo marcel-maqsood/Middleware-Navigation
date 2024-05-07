@@ -6,7 +6,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Expressive\Router\RouteResult;
+use Mezzio\Router\RouteResult;
 
 /**
  * Pipeline middleware for injecting Navigations with a RouteResult.
@@ -35,15 +35,18 @@ class NavigationMiddleware implements MiddlewareInterface
     public function process(
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
-    ): ResponseInterface {
+    ): ResponseInterface 
+    {
 
         //$routeResult = $request->getAttribute(RouteResult::class, false);
         $routeResult = $this->router->match($request);
-        if (!$routeResult instanceof RouteResult) {
+        if (!$routeResult instanceof RouteResult) 
+        {
             return $handler->handle($request);
         }
 
-        foreach ($this->navigationObjects as $navigationName => $navigationObj) {
+        foreach ($this->navigationObjects as $navigationName => $navigationObj) 
+        {
             $navigationObj->setRoute($routeResult->getMatchedRouteName());
             $navigationObj->setParams($routeResult->getMatchedParams());
             $this->renderer->addDefaultParam($this->renderer::TEMPLATE_ALL, substr($navigationName, strrpos($navigationName, '\\') + 1), $navigationObj->render());
