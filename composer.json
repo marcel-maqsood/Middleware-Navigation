@@ -32,7 +32,7 @@
     "extra": {
         "zf": {
             "component": "MazeDEV\\NavigationMiddleware",
-            "config-provider": "MazeEV\\NavigationMiddleware\\ConfigProvider"
+            "config-provider": "MazeDEV\\NavigationMiddleware\\ConfigProvider"
         }
     },
     "minimum-stability" : "dev",
