@@ -97,7 +97,7 @@ class Navigation
 
 				if(isset($item['route']))
 				{
-					if($this->sessionAuthMiddleware != null && $this->sessionAuthMiddleware::$permissionManager->getFetchedData() && !$this->sessionAuthMiddleware::$permissionManager->userHasPermission($item['route']))
+					if($this->sessionAuthMiddleware != null && $this->sessionAuthMiddleware::$permissionManager->dataFetched() && !$this->sessionAuthMiddleware::$permissionManager->userHasPermission($item['route']))
 					{
 						continue;
 					}
