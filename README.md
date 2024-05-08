@@ -139,13 +139,22 @@ Which would look like this:
 <br/>
 
 Keep in mind that at some point you either have to add our Middleware: NavigationMiddleware inside of your pipeline (that way you will always be able to use the rendered menu):
-## This way is only working without permission checks, you have to include it in every route if you want to use the permission handling that our SessionAuthMiddleware provides. - we are working on a solution. ##
+#### If you want to add our Middleware in your pipeline, it is crucial to include our SessionAuthMiddleware *AFTER* the ```Mezzio\Helper\UrlHelperMiddleware``` which is included in every base pipeline: ####
 ```
- $app->pipe(NavigationMiddleware::class);
+$app->pipe(UrlHelperMiddleware::class);
+$app->pipe(NavigationMiddleware::class);
 ```
 
-or within your routes:
+If you want to use our ```MazeDEV\SessionAuth\SessinAuthMiddleware``` for permission handling within the NavigationMiddleware, you also need to include our NavigationMiddleware *AFTER* our SessionAuthMiddleware:
+```
+$app->pipe(UrlHelperMiddleware::class);
+$app->pipe(SessionAuthMiddleware::class);
+$app->pipe(NavigationMiddleware::class);
+```
+Thats the only way you can use these middlewares combined within a global scope.
 
+
+However, you could also include the Middlewares within your routes:
 ```
 $app->route('/user[/]',
         [
@@ -161,7 +170,7 @@ $app->route('/user[/]',
     );
 ```
 
-But as stated above, it is way easier to just add it to your pipeline.
+But as stated above, it is way easier and much better maintainable to just add it to your pipeline.
 
 
 #### Permission based Naviagation ####
