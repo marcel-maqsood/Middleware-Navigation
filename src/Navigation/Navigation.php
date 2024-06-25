@@ -131,7 +131,7 @@ class Navigation
 
 				if (isset($item['childs']))
 				{
-					$this->render($menu, $item['childs']);
+					$this->render($menu[$key], $item['childs']);
 				}
 			}
 			catch (\Exception $e)
