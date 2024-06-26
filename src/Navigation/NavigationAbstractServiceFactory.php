@@ -70,7 +70,7 @@ class NavigationAbstractServiceFactory implements AbstractFactoryInterface
         $config = $this->getConfig($container);
         $router = $container->get(RouterInterface::class);
 		$sessionAuthMiddleware = $container->get(SessionAuthMiddleware::class) ?? null;
-        $naviStructure = $config[$requestedName]['data'];
+        $naviStructure = $config[$requestedName];
         $debug = $container->get('config')['debug'];
         if ($debug !== true)
         {

@@ -70,8 +70,7 @@ class Navigation
 
 	public function render($menu = null, array $childs = [])
 	{
-
-		$entries = $this->data;
+		$entries = $this->data['data'];
 		if($menu != null)
 		{
 			$entries = $childs;
@@ -81,7 +80,7 @@ class Navigation
 			$factory = new MenuFactory();
 			$menu = $factory->createItem('My menu', [
 				'childrenAttributes' => [
-					'class' => 'nav nav-pills nav-sidebar flex-column'
+					'class' => $this->data['childrenAttributes']['class'],
 				]
 			]);
 		}
@@ -126,11 +125,19 @@ class Navigation
 				if(isset($item['display']))
 				{
 					$menu[$key]->setExtra('safe_label', true);
-					$menu[$key]->setLabel('<i class="' . $item['display'] . '"></i>' .  $key);
+					$menu[$key]->setLabel('<i class="' . $item['display'] . '"></i>' .  $key );
 				}
 
 				if (isset($item['childs']))
 				{
+					if(isset($item['childOpenDisplay']))
+					{
+						$menu[$key]->setLabel($menu[$key]->getLabel() . '<i class="' . $item['childOpenDisplay'] . '"></i>');
+					}
+					if(isset($item['childrenAttributes']))
+					{
+						$menu[$key]->setChildrenAttributes($item['childrenAttributes']);
+					}
 					$this->render($menu[$key], $item['childs']);
 				}
 			}

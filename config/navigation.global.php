@@ -7,6 +7,9 @@ use MazeDEV\NavigationMiddleware\Navigation\Navigation;
 return [
     'mazenav' => [
         Navigation::class => [
+            'childrenAttributes'     => [
+                'class' => 'nav nav-pills nav-sidebar flex-column', //define classes for the main UL element
+            ],
             'data'               => [
                 'Teilnehmerbereich'  => [
                     'display'        => 'fas fa-home nav-icon',
@@ -40,6 +43,9 @@ return [
                     'linkAttributes' => [
                         'id'    => '_admin_landing_',
                         'class' => 'nav-link',
+                    ],
+                    'childrenAttributes'     => [
+                        'class' => 'nav nav-pills nav-sidebar flex-column', //define classes for the sub menu of this element
                     ],
                 ],
             ],
