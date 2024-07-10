@@ -102,6 +102,15 @@ class Navigation
 					}
 					$item['uri'] = $this->router->generateUri($item['route'], $item['routeArguments']);
 				}
+				
+				if(isset($item['permission']))
+				{
+					if($this->sessionAuthMiddleware != null && $this->sessionAuthMiddleware::$permissionManager->dataFetched() && !$this->sessionAuthMiddleware::$permissionManager->userHasPermission($item['permission']))
+					{
+						continue;
+					}
+					$item['uri'] = $this->router->generateUri($item['route'], $item['routeArguments']);
+				}
 
 				if (isset($item['route']) && strpos($this->activeRoute, $item['route']) !== false)
 				{

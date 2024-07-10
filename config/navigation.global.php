@@ -37,6 +37,7 @@ return [
                 'Admin Dashboard' => [
                     'display'        => 'fas fa-tachometer-alt nav-icon',
                     'route'          => 'adminLanding',
+                    'permission'     => 'somepermission',
                     'attributes'     => [
                         'class ' => 'nav-item menu-open',
                     ],

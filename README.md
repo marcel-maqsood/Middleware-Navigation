@@ -80,6 +80,7 @@ A menu-item which contains any of the given examples could look like this:
 '{navigation_Name}' => [
     'display' => 'fas fa-home nav-icon'
     'route' => '{route_name}',
+    'permission' => 'somePermission',
     'uri' => '{https://www.technikhafen.de}',
     'attributes' => [
         'id' => '{some_id}',
@@ -93,6 +94,7 @@ A menu-item which contains any of the given examples could look like this:
         '{childNavigation_Name}' => [
             'display' => 'fas fa-home nav-icon'
             'route' => '{route_name}',
+            'permission' => 'somePermission2',
             'uri' => '{https://www.technikhafen.de}',
             'attributes' => [],
             'linkAttributes' => [],
@@ -177,6 +179,8 @@ But as stated above, it is way easier and much better maintainable to just add i
 Our NavigationMiddleware is capable of rendering only navigation elements, that  the user has permissions for.
 This is achived by including our [SessionAuthMiddleware](https://github.com/marcel-maqsood/Mezzio-Session-Auth-Middleware/)
 The NaviagationMiddleware will only check for permissions if the SAM is present, otherwise it will render every element you supplied.
+You can either work with the "route" param of each object as their permission (always) or also check against another permission, defined in "permission" entry.
+
 
 
 Attributes you could use and what they do:
