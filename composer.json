@@ -11,7 +11,7 @@
     "homepage" : "https://technikhafen.de",
     "require": {
         "laminas/laminas-servicemanager": "^3.22",
-        "mezzio/mezzio-router": "3.17",
+        "mezzio/mezzio-router": "^3.17",
         "knplabs/knp-menu": "^3.5"
     },
 
