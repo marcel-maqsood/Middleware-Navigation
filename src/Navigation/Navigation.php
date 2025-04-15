@@ -140,7 +140,7 @@ class Navigation
 				{
 					if(isset($item['childOpenDisplay']))
 					{
-						$menu[$key]->setLabel($menu[$key]->getLabel() . '<i class="' . $item['childOpenDisplay'] . '"></i>');
+						$menu[$key]->setLabel(str_replace("</p>", "", $menu[$key]->getLabel()) . '<i class="' . $item['childOpenDisplay'] . '"></i></p>');
 					}
 					if(isset($item['childrenAttributes']))
 					{
