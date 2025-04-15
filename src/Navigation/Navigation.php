@@ -133,7 +133,7 @@ class Navigation
 				if(isset($item['display']))
 				{
 					$menu[$key]->setExtra('safe_label', true);
-					$menu[$key]->setLabel('<i class="' . $item['display'] . '"></i>' .  $key );
+					$menu[$key]->setLabel('<i class="' . $item['display'] . '"></i><p>' .  $key . '</p>' );
 				}
 
 				if (isset($item['childs']))
